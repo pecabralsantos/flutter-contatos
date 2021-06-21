@@ -39,6 +39,21 @@ mixin _$FeedController on FeedControllerBase, Store {
     });
   }
 
+  final _$contactAtom = Atom(name: 'FeedControllerBase.contact');
+
+  @override
+  ContactDTO get contact {
+    _$contactAtom.reportRead();
+    return super.contact;
+  }
+
+  @override
+  set contact(ContactDTO value) {
+    _$contactAtom.reportWrite(value, super.contact, () {
+      super.contact = value;
+    });
+  }
+
   final _$FeedControllerBaseActionController =
       ActionController(name: 'FeedControllerBase');
 
@@ -55,10 +70,23 @@ mixin _$FeedController on FeedControllerBase, Store {
   }
 
   @override
+  void getContact(ContactDTO dto,
+      {dynamic Function()? success, dynamic Function(String)? error}) {
+    final _$actionInfo = _$FeedControllerBaseActionController.startAction(
+        name: 'FeedControllerBase.getContact');
+    try {
+      return super.getContact(dto, success: success, error: error);
+    } finally {
+      _$FeedControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 serviceStatus: ${serviceStatus},
-contactList: ${contactList}
+contactList: ${contactList},
+contact: ${contact}
     ''';
   }
 }

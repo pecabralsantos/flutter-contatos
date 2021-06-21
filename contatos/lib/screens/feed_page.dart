@@ -54,7 +54,7 @@ class _FeedPageState extends State<FeedPage> {
                   itemCount: _controller.contactList.length,
                   itemBuilder: (_, index) {
                     var contactList = _controller.contactList[index];
-                    return Cards.feed(contactList);
+                    return Cards.feed(context, contactList);
                   },
                 );
               case ServiceStatus.ERROR:

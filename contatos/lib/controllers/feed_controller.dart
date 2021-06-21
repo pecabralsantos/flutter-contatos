@@ -17,12 +17,29 @@ abstract class FeedControllerBase with Store {
   @observable
   ObservableList<ContactDTO> contactList = ObservableList();
 
+  @observable
+  late ContactDTO contact;
+
   @action
   void getListContacts({Function()? success, Function(String msg)? error}) {
     serviceStatus = ServiceStatus.WAITING;
-    _apiService.getListContacts().then((contacts) {
+    _apiService.getListContacts().then((value) {
       contactList.clear();
-      contactList.addAll(contacts.asObservable());
+      contactList.addAll(value.asObservable());
+      serviceStatus = ServiceStatus.DONE;
+      success?.call();
+    }).catchError((onError) {
+      serviceStatus = ServiceStatus.ERROR;
+      error?.call(onError);
+    });
+  }
+
+  @action
+  void getContact(ContactDTO dto,
+      {Function()? success, Function(String msg)? error}) {
+    serviceStatus = ServiceStatus.WAITING;
+    _apiService.getContact(dto.id).then((value) {
+      contact = value;
       serviceStatus = ServiceStatus.DONE;
       success?.call();
     }).catchError((onError) {

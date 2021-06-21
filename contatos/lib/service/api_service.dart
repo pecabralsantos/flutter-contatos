@@ -4,11 +4,13 @@ import 'package:retrofit/retrofit.dart';
 
 part 'api_service.g.dart';
 
-@RestApi(baseUrl: "https://60c8b73dafc88600179f7da1.mockapi.io/")
+@RestApi(baseUrl: 'https://60c8b73dafc88600179f7da1.mockapi.io/')
 abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
-  @GET("/contacts")
+  @GET('/contacts')
   Future<List<ContactDTO>> getListContacts();
-}
 
+  @GET('/contacts/{id}')
+  Future<ContactDTO> getContact(@Path('id') String id);
+}

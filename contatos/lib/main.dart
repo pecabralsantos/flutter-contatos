@@ -1,4 +1,5 @@
 import 'package:contatos/controllers/feed_controller.dart';
+import 'package:contatos/screens/contact_page.dart';
 import 'package:contatos/screens/feed_page.dart';
 import 'package:contatos/service/api_service.dart';
 import 'package:dio/dio.dart';
@@ -27,6 +28,7 @@ class Contacts extends StatelessWidget {
       initialRoute: '/contatos',
       routes: {
         '/contatos': (_) => FeedPage(),
+        '/detalhe-contato': (_) => ContactPage(),
       },
     );
   }

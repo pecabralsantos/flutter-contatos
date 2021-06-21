@@ -1,8 +1,9 @@
 import 'package:contatos/service/model/contact_dto.dart';
+import 'package:contatos/utils/route_arguments.dart';
 import 'package:flutter/material.dart';
 
 class Cards {
-  static feed(ContactDTO dto) {
+  static feed(BuildContext context, ContactDTO dto) {
     return Card(
       margin: EdgeInsets.fromLTRB(8, 4, 8, 8),
       elevation: 3,
@@ -38,7 +39,13 @@ class Cards {
             ],
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            '/detalhe-contato',
+            arguments: ContactRouteArguments(dto),
+          );
+        },
       ),
     );
   }
