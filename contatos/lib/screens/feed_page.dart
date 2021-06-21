@@ -1,3 +1,4 @@
+import 'package:contatos/components/cards.dart';
 import 'package:contatos/controllers/feed_controller.dart';
 import 'package:contatos/utils/service_status.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +27,14 @@ class _FeedPageState extends State<FeedPage> {
   void _onRefresh() {
     _controller.getListContacts(
       success: () => _refreshController.refreshCompleted(),
-      error: (onError) => _refreshController.refreshFailed(),
+      error: (msg) => _refreshController.refreshFailed(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       body: SmartRefresher(
         controller: _refreshController,
         header: MaterialClassicHeader(
@@ -52,19 +54,7 @@ class _FeedPageState extends State<FeedPage> {
                   itemCount: _controller.contactList.length,
                   itemBuilder: (_, index) {
                     var contactList = _controller.contactList[index];
-                    return ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.network(
-                          contactList.photo,
-                          width: 45,
-                          height: 45,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      title: Text(contactList.name),
-                      onTap: () {},
-                    );
+                    return Cards.feed(contactList);
                   },
                 );
               case ServiceStatus.ERROR:
