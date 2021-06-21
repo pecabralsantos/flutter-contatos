@@ -9,6 +9,21 @@ part of 'feed_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FeedController on FeedControllerBase, Store {
+  final _$serviceStatusAtom = Atom(name: 'FeedControllerBase.serviceStatus');
+
+  @override
+  ServiceStatus get serviceStatus {
+    _$serviceStatusAtom.reportRead();
+    return super.serviceStatus;
+  }
+
+  @override
+  set serviceStatus(ServiceStatus value) {
+    _$serviceStatusAtom.reportWrite(value, super.serviceStatus, () {
+      super.serviceStatus = value;
+    });
+  }
+
   final _$contactListAtom = Atom(name: 'FeedControllerBase.contactList');
 
   @override
@@ -24,17 +39,25 @@ mixin _$FeedController on FeedControllerBase, Store {
     });
   }
 
-  final _$getListContactsAsyncAction =
-      AsyncAction('FeedControllerBase.getListContacts');
+  final _$FeedControllerBaseActionController =
+      ActionController(name: 'FeedControllerBase');
 
   @override
-  Future<void> getListContacts() {
-    return _$getListContactsAsyncAction.run(() => super.getListContacts());
+  void getListContacts(
+      {dynamic Function()? success, dynamic Function(String)? error}) {
+    final _$actionInfo = _$FeedControllerBaseActionController.startAction(
+        name: 'FeedControllerBase.getListContacts');
+    try {
+      return super.getListContacts(success: success, error: error);
+    } finally {
+      _$FeedControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
     return '''
+serviceStatus: ${serviceStatus},
 contactList: ${contactList}
     ''';
   }

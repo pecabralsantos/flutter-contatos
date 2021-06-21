@@ -24,7 +24,10 @@ class Contacts extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.ubuntuTextTheme(),
       ),
-      home: FeedPage(),
+      initialRoute: '/contatos',
+      routes: {
+        '/contatos': (_) => FeedPage(),
+      },
     );
   }
 }
